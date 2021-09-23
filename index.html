@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="user.png" type="image/x-icon">
+    <title>Login Form</title>
+    <!--==========================================================================-->
+    <style>
+        
+        @media only screen and (max-width: 600px) {
+        body {
+            background-image: url(s-bg.jpg);
+            }
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-image: url(bg.jpg);
+            background-image: url(s-bg.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #loginForm {
+            width: 300px;
+            height: 340px;
+            padding: 15px;
+            margin: 100px auto;
+            background-color: #ccc;
+            border-radius: 5px;
+        }
+        #header {
+            width: 300px;
+            height: 70px;
+            font-size: 25pt;
+        }
+        #user, #passwd {
+            border-bottom: 1px solid black;
+            float: left;
+        }
+        #usernameIncorrect, #passwdIncorrect {
+            width: 300px;
+            height: 30px;
+            font-size: 10pt;
+            color: red;
+            visibility: hidden;
+        }
+        #login {
+            width: 300px;
+            height: 40px;
+            background-color: rgb(55, 0, 255);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input {
+            width: 280px;
+            height: 30px;
+            outline: none;
+            border: none ;
+            background-color: unset;
+            font-size: 12pt;
+        }
+        ::placeholder {
+            font-size: 12pt;
+        }
+        .textCenter {
+            text-align: center;
+        }
+        .textMiddle {
+            display: inline-table;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .space {
+            padding: 20px 0;
+        }
+        .userRequire, .pwdRequire {
+            color: red;
+            cursor: default;
+        }
+    </style>
+    <!--==========================================================================-->
+</head>
+<body>
+
+    <div id="loginForm">
+        <div id="header"  class="textMiddle textCenter">Admin Login</div>
+        <div id="user">
+            <input id="userValue" onpointerenter="userBorder()" onpointerleave="userBorderLeave()" type="text" placeholder="Username">
+            <span class="userRequire">*</span>
+        </div>
+        <div id="usernameIncorrect" class="textMiddle">message</div>
+        <div id="passwd">
+            <input id="pwdValue" onpointerenter="pwdBorder()" onpointerleave="pwdBorderLeave()" type="password" placeholder="Password">
+            <span class="pwdRequire">*</span>
+        </div>
+        <div id="passwdIncorrect" class="textMiddle">message</div>
+        <div class="space"></div>
+        <div id="login" class="textMiddle textCenter" onclick="loginCheck()">Login</div>
+    </div>
+
+    <!--==========================================================================-->
+    <script>
+        //
+        function userBorder(){ document.getElementById("user").style.borderBottom = "2px solid blue"; }
+        function pwdBorder(){ document.getElementById("passwd").style.borderBottom = "2px solid blue"; }
+        function userBorderLeave(){ document.getElementById("user").style.borderBottom = "1px solid black"; }
+        function pwdBorderLeave(){ document.getElementById("passwd").style.borderBottom = "1px solid black"; }
+        //
+        function loginCheck(){
+            var user = document.getElementById("userValue").value;
+            var pwd = document.getElementById("pwdValue").value;
+            var userInc = document.getElementById("usernameIncorrect");
+            var pwdInc = document.getElementById("passwdIncorrect");
+            //
+            var userCheck = Number(user[0]);
+            //
+            function showUserMessage(){
+                userInc.style.visibility = "visible";
+            }
+            function showPwdMessage(){
+                pwdInc.style.visibility = "visible";
+            }
+            function hideUserMessage(){
+                userInc.style.visibility = "hidden";
+            }
+            function hidePwdMessage(){
+                pwdInc.style.visibility = "hidden";
+            }
+            //
+            if(user=="" && pwd==""){
+                userInc.innerHTML = "Username required";
+                pwdInc.innerHTML = "Password required";
+                showUserMessage();
+                showPwdMessage();
+            } else if(!isNaN(userCheck) && pwd==""){
+                userInc.innerHTML = "Username can only contain text";
+                pwdInc.innerHTML = "Password required";
+                showUserMessage();
+                showPwdMessage();
+            } else if(!isNaN(userCheck) && pwd==""){
+                userInc.innerHTML = "Username can only contain text";
+                pwdInc.innerHTML = "Password required";
+                showUserMessage();
+                showPwdMessage();
+            } else if(!isNaN(userCheck) && pwd!="123"){
+                userInc.innerHTML = "Username can only contain text";
+                pwdInc.innerHTML = "Password incorrect";
+                showUserMessage();
+                showPwdMessage();
+            } else if(!isNaN(userCheck) && pwd=="123"){
+                userInc.innerHTML = "Username can only contain text";
+                showUserMessage();
+                hidePwdMessage();
+            } else if(user=="" && pwd=="123"){
+                userInc.innerHTML = "Username required";
+                showUserMessage();
+                hidePwdMessage();
+            } else if(user=="admin" && pwd==""){
+                pwdInc.innerHTML = "Password required";
+                showPwdMessage();
+                hideUserMessage();
+            }  else if(user!="admin" && pwd==""){
+                userInc.innerHTML = "Username incorrect";
+                pwdInc.innerHTML = "Password required";
+                showUserMessage();
+                showPwdMessage();
+            }   else if(user=="" && pwd!="123"){
+                userInc.innerHTML = "Username required";
+                pwdInc.innerHTML = "Password incorrect";
+                showUserMessage();
+                showPwdMessage();
+            } else if(user=="admin" && pwd!="123"){
+                pwdInc.innerHTML = "Password incorrect";
+                showPwdMessage();
+                hideUserMessage();
+            } else if(user!="admin" && pwd=="123"){
+                userInc.innerHTML = "Username incorrect";
+                showUserMessage();
+                hidePwdMessage();
+            } else {
+                if(user=="admin" && pwd=="123"){
+                    window.open('success.html','_self');
+                } else {
+                    userInc.innerHTML = "Username incorrect";
+                    pwdInc.innerHTML = "Password incorrect";
+                    showUserMessage();
+                    showPwdMessage();
+                }
+            }
+        }
+    </script>
+    <!--==========================================================================-->
+</body>
+</html>
